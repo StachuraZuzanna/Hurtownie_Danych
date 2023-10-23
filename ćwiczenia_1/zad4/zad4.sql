@@ -1,7 +1,7 @@
 --Zadanie 4
---Proszê stworzyæ tabelê która poka¿e kwotê ka¿dego zamówienia w jednej kolumnie wraz z id 
---zamówienia w drugiej, oraz œredniej kwocie zamówienia dla ka¿dego miesi¹ca w formacie jak 
---poni¿ej (w tym przypadku Common Table Expressions mog¹ okazaæ siê szczególnie przydatne)
+--ProszÄ™ stworzyÄ‡ tabelÄ™ ktÃ³ra pokaÅ¼e kwotÄ™ kaÅ¼dego zamÃ³wienia w jednej kolumnie wraz z id 
+--zamÃ³wienia w drugiej, oraz Å›redniej kwocie zamÃ³wienia dla kaÅ¼dego miesiÄ…ca w formacie jak 
+--poniÅ¼ej (w tym przypadku Common Table Expressions mogÄ… okazaÄ‡ siÄ™ szczegÃ³lnie przydatne)
 
 with order_sum as (
     select 
@@ -14,15 +14,15 @@ with order_sum as (
 	group by 
 		order_id,month(order_date)
 ),
---select * from order_sum  --> order_id,order_amount, numer miesi¹ca, order_date
-
-ma as (select  --month average
-       month(order_date) as miesiac,
-	   format(avg(total_price),'n6') as average_month_amount
-from [dbo].pizza_sales
-group by month(order_date)
+--select * from order_sum  --> order_id,order_amount, numer miesiÄ…ca, order_date
+ma as (
+select 
+	miesiac, 
+	format(avg(cast(order_amount as float)),'n6') as average_month_amount
+from order_sum
+group by miesiac 
 )
---select * from month_avg  --> numer miesi¹ca, œrednia dla miesi¹ca
+--select * from month_avg  --> numer miesiÄ…ca, Å›rednia dla miesiÄ…ca
 
 select 
 	order_sum.order_id,
@@ -33,9 +33,6 @@ from
 	order_sum
 inner join
 	ma on order_sum.miesiac = ma.miesiac
-order by 
-	order_sum.order_amount
-
 
 
 
