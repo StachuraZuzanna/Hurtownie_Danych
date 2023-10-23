@@ -1,10 +1,10 @@
 --Zadanie 6
---Proszê wykonaæ tabelê z popularnoœci¹ danych rodzajów pizzy w miesi¹cu Styczniu 2015. Ma 
---ona pokazywaæ iloœæ sprzedanych rodzajów pizz bez rozró¿nienia na jej rozmiary. Tabela ma 
---zawieraæ nazwê ka¿dej pizzy oraz jej kategoriê.
+--ProszÄ™ wykonaÄ‡ tabelÄ™ z popularnoÅ›ciÄ… danych rodzajÃ³w pizzy w miesiÄ…cu Styczniu 2015. Ma 
+--ona pokazywaÄ‡ iloÅ›Ä‡ sprzedanych rodzajÃ³w pizz bez rozrÃ³Å¼nienia na jej rozmiary. Tabela ma 
+--zawieraÄ‡ nazwÄ™ kaÅ¼dej pizzy oraz jej kategoriÄ™.
 
 select 
-	pizza_name,count(pizza_name) as ilosc_sprzedanych,pizza_category 
+	pizza_name,sum(quantity) as ilosc_sprzedanych,pizza_category 
 from 
 	dbo.pizza_sales 
 where 
@@ -12,4 +12,4 @@ where
 group by 
 	pizza_name,pizza_category 
 order by 
-	count(pizza_name) desc
+	sum(quantity) desc
